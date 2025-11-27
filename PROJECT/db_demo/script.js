@@ -1,4 +1,4 @@
-import * as duckdb from "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.28.0/dist/duckdb-wasm.js";
+import * as duckdb from "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.28.0/dist/duckdb-browser.mjs";
 
 let db;
 
@@ -37,7 +37,7 @@ async function loadCSVs() {
   for (const t of tables) {
     await db.run(`
       CREATE TABLE ${t} AS
-      SELECT * FROM read_csv_auto('../data/${t}.csv');
+      SELECT * FROM read_csv_auto('PROJECT/data/${t}.csv');
     `);
   }
 }
@@ -107,7 +107,7 @@ const presetQueries = {
 };
 
 // ----------------------------
-// Handle Page Logic
+// Page Logic
 // ----------------------------
 document.addEventListener("DOMContentLoaded", async () => {
   db = await initDuckDB();
