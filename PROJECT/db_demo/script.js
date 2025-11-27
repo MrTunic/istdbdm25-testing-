@@ -1,24 +1,23 @@
-import * as duckdb from "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@latest/dist/duckdb-wasm.mjs";
+import * as duckdb from "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@latest/dist/duckdb-browser.js";
 let db;
 
 // ----------------------------
 // Initialize DuckDB
 // ----------------------------
 async function initDuckDB() {
-  const bundle = await duckdb.selectBundle({
-    mvp: {
-      mainModule: "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.28.0/dist/duckdb-mvp.wasm",
-      mainWorker: "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.28.0/dist/duckdb-browser-mvp.worker.js"
-    }
-  });
+  const bundles = duckdb.getJsDelivrBundles();
+  const bundle = await duckdb.selectBundle(bundles);
 
-  const worker = new Worker(bundle.mainWorker);
+  const worker = new Worker(bundle.worker);
   const logger = new duckdb.ConsoleLogger();
 
   const dbInstance = new duckdb.AsyncDuckDB(logger, worker);
-  await dbInstance.instantiate(bundle.mainModule);
+
+  await dbInstance.instantiate(bundle.mainModule, bundle.pthreadWorker);
+
   return dbInstance;
 }
+
 
 // ----------------------------
 // Load CSVs into DuckDB tables
