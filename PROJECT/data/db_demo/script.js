@@ -1,4 +1,4 @@
-import * as duckdb from "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@latest/dist/duckdb-browser.js";
+import * as duckdb from "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@latest/dist/duckdb-wasm.mjs";
 let db;
 
 // ----------------------------
@@ -12,7 +12,6 @@ async function initDuckDB() {
   const logger = new duckdb.ConsoleLogger();
 
   const dbInstance = new duckdb.AsyncDuckDB(logger, worker);
-
   await dbInstance.instantiate(bundle.mainModule, bundle.pthreadWorker);
 
   return dbInstance;
