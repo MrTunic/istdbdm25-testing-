@@ -20,14 +20,12 @@ async function initSQLite() {
 async function loadCSVs() {
   if (!db) return alert("SQLite not ready yet");
 
-  const tables = ["cities", "restaurants", "employees", "customers", "foods", "orders"];
+  const tables = ["cities","restaurants","employees","customers","foods","orders"];
 
   for (const table of tables) {
     try {
       const resp = await fetch(`PROJECT/data/${table}.csv`);
-      if (!resp.ok) {
-        throw new Error(`404 for PROJECT/data/${table}.csv`);
-      }
+      if (!resp.ok) throw new Error("404");
       const csvText = await resp.text();
 
       const parsed = Papa.parse(csvText, { header: true, skipEmptyLines: true });
@@ -47,10 +45,9 @@ async function loadCSVs() {
         stmt.run(cols.map(c => row[c] ?? null));
       }
       stmt.free();
-
     } catch (e) {
-      document.getElementById("loadStatus").textContent = `Failed: ${table}.csv`;
-      console.error("Load error:", e);
+      document.getElementById("loadStatus").textContent = `Failed loading ${table}.csv`;
+      console.error(e);
       return;
     }
   }
