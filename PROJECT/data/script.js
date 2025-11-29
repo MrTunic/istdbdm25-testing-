@@ -24,7 +24,7 @@ async function loadCSVs() {
 
   for (const table of tables) {
     try {
-      const resp = await fetch(`PROJECT/data/${table}.csv`);
+      const resp = await fetch(`${table}.csv`);
       if (!resp.ok) throw new Error("404");
       const csvText = await resp.text();
 
