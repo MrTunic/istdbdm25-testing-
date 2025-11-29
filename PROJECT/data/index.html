@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Restaurant DB Demo</title>
   <link rel="stylesheet" href="style.css">
+  <!-- sql.js + PapaParse from CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.10.3/sql-wasm.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
 </head>
 
 <body>
@@ -30,6 +34,6 @@
   <h2>Results</h2>
   <pre id="output"></pre>
 
-  <script type="module" src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
